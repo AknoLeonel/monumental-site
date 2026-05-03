@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronRight, ShieldCheck, ArrowRight, Play, CheckCircle2, MousePointer2, Layers, AudioLines, HardHat } from 'lucide-react';
+import { ChevronRight, ShieldCheck, ArrowRight, Play, CheckCircle2, Layers, AudioLines, HardHat } from 'lucide-react';
 import { useRef } from 'react';
 import Image from 'next/image';
 
@@ -57,31 +57,31 @@ export default function MonumentalHome() {
   ];
 
   return (
-    <main className="bg-[#030303] text-zinc-300 selection:bg-[#D4AF37] selection:text-black font-sans">
+    <main className="bg-[#030303] text-zinc-300 selection:bg-[#D4AF37] selection:text-black font-sans overflow-x-hidden">
       
-      {/* ================= SCROLL PROGRESS BAR (Gatilho Psicológico) ================= */}
+      {/* ================= SCROLL PROGRESS BAR ================= */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] origin-left z-[100]"
         style={{ scaleX: scrollYProgress }}
       />
 
-      {/* ================= HEADER ULTRA-MINIMALISTA ================= */}
+      {/* ================= HEADER ================= */}
       <header className="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-500 mt-[3px]">
-        <div className="max-w-[90rem] mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="text-xl md:text-2xl font-title font-bold tracking-[0.2em] text-white">
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+          <div className="text-base sm:text-xl md:text-2xl font-title font-bold tracking-[0.1em] sm:tracking-[0.2em] text-white">
             MONUMENTAL<span className="text-[#D4AF37]">.</span>
           </div>
-          <a href="#contato" className="group flex items-center gap-3 px-5 py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 cursor-pointer rounded-sm">
-            <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] text-[#D4AF37] group-hover:text-black uppercase transition-colors">
+          <a href="#contato" className="group flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-5 sm:py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 cursor-pointer rounded-sm">
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.1em] sm:tracking-[0.2em] text-[#D4AF37] group-hover:text-black uppercase transition-colors">
               Consultoria VIP
             </span>
-            <ArrowRight className="w-4 h-4 text-[#D4AF37] group-hover:text-black transition-colors hidden sm:block" />
+            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37] group-hover:text-black transition-colors hidden sm:block" />
           </a>
         </div>
       </header>
 
-      {/* ================= HERO (INALTERADO - JÁ ESTAVA PERFEITO) ================= */}
-      <section ref={targetRef} className="relative w-full h-[100svh] min-h-[650px] flex flex-col items-center justify-center overflow-hidden pt-20 pb-10">
+      {/* ================= HERO (TÍTULO TOTALMENTE SEGURO E ELEGANTE) ================= */}
+      <section ref={targetRef} className="relative w-full h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-20 pb-10">
         <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform transform-gpu">
           <Image 
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
@@ -95,35 +95,43 @@ export default function MonumentalHome() {
         
         <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/40 via-[#030303]/60 to-[#030303] z-10" />
         
-        <motion.div style={{ opacity: opacityFade }} className="relative z-20 w-full max-w-5xl mx-auto px-4 flex flex-col items-center text-center">
+        <motion.div style={{ opacity: opacityFade }} className="relative z-20 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
+          
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 backdrop-blur-md mb-6"
+            className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 backdrop-blur-md mb-8"
           >
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4AF37]"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-[#D4AF37]"></span>
             </span>
-            <span className="text-[10px] sm:text-xs text-[#D4AF37] uppercase tracking-[0.2em] font-semibold">O Padrão Premium em Brasília</span>
+            <span className="text-[9px] sm:text-xs text-[#D4AF37] uppercase tracking-[0.2em] font-semibold">
+              O Padrão Premium em Brasília
+            </span>
           </motion.div>
 
+          {/* TÍTULO BLINDADO: Usando classes base do Tailwind. Semvw, sem nowrap. Perfeito! */}
           <motion.h1 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full font-title font-extrabold uppercase tracking-tighter leading-[0.95] mb-6 flex flex-col items-center justify-center"
+            className="w-full font-title font-extrabold uppercase tracking-tight sm:tracking-tighter leading-tight sm:leading-[1.1] mb-6"
           >
-            <span className="block text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] drop-shadow-lg">A Engenharia</span>
-            <span className="block text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] mt-1 sm:mt-2 pb-2">Do Espetáculo.</span>
+            <span className="block text-white drop-shadow-lg text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] mb-2 sm:mb-0">
+              A Engenharia
+            </span>
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+              Do Espetáculo.
+            </span>
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="text-sm sm:text-base md:text-lg text-zinc-400 font-light max-w-2xl leading-relaxed mb-8 px-2"
+            className="text-sm sm:text-base md:text-lg text-zinc-400 font-light max-w-2xl leading-relaxed mb-10"
           >
             Esqueça o amadorismo. Fornecemos estruturas de palco, audiovisual e soluções técnicas de alto calibre para eventos que exigem perfeição absoluta.
           </motion.p>
@@ -132,19 +140,19 @@ export default function MonumentalHome() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md sm:max-w-none justify-center"
+            className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-[280px] sm:max-w-none justify-center mx-auto"
           >
-            <a href="#contato" className="w-full sm:w-auto px-8 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-[#D4AF37] to-[#B8962E] text-black font-title font-bold text-xs sm:text-sm uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-3 rounded-sm">
+            <a href="#contato" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-[#D4AF37] to-[#B8962E] text-black font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
               Solicitar Projeto <ChevronRight className="w-4 h-4" />
             </a>
-            <a href="#acervo" className="w-full sm:w-auto px-8 py-4 sm:px-10 sm:py-5 bg-transparent border border-white/20 text-white font-title font-bold text-xs sm:text-sm uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-3 rounded-sm">
+            <a href="#acervo" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-transparent border border-white/20 text-white font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
               <Play className="w-4 h-4 fill-current" /> Ver Portfólio
             </a>
           </motion.div>
         </motion.div>
       </section>
 
-      {/* ================= ACERVO (GRID CENTRALIZADO E COMPACTO) ================= */}
+      {/* ================= ACERVO ================= */}
       <section id="acervo" className="py-24 md:py-32 px-6 bg-[#030303] border-t border-white/5">
         <div className="max-w-[90rem] mx-auto">
           
@@ -157,7 +165,6 @@ export default function MonumentalHome() {
             </h3>
           </div>
 
-          {/* Grid de 3 Colunas - Ocupa menos espaço vertical e é altamente visual */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {services.map((service, index) => (
               <motion.div 
@@ -168,7 +175,6 @@ export default function MonumentalHome() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group flex flex-col bg-[#080808] border border-white/5 hover:border-[#D4AF37]/30 transition-colors duration-500 overflow-hidden rounded-sm"
               >
-                {/* Espaço da Foto */}
                 <div className="w-full h-56 md:h-64 bg-[#0a0a0a] relative overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-t from-[#080808] to-transparent z-10" />
                   <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-title text-xs tracking-[0.3em] uppercase transition-transform duration-700 group-hover:scale-105">
@@ -176,7 +182,6 @@ export default function MonumentalHome() {
                   </div>
                 </div>
 
-                {/* Conteúdo Textual Compacto */}
                 <div className="p-8 relative z-20 -mt-8">
                   <div className="w-12 h-12 bg-[#030303] border border-white/10 flex items-center justify-center mb-6 shadow-xl">
                     {service.icon}
@@ -194,9 +199,8 @@ export default function MonumentalHome() {
         </div>
       </section>
 
-      {/* ================= O MÉTODO (VISUAL E DIRETO) ================= */}
+      {/* ================= O MÉTODO ================= */}
       <section id="metodo" className="py-24 md:py-32 px-6 bg-[#050505] border-t border-white/5 relative overflow-hidden">
-        {/* Efeito de luz de fundo */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#D4AF37]/5 blur-[120px] pointer-events-none" />
 
         <div className="max-w-[90rem] mx-auto text-center relative z-10">
@@ -206,7 +210,6 @@ export default function MonumentalHome() {
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 relative">
-            {/* Linha conectora do visual timeline (Desktop) */}
             <div className="hidden md:block absolute top-10 left-[20%] right-[20%] h-[1px] border-t border-dashed border-white/20" />
 
             {steps.map((step, index) => (
@@ -218,12 +221,10 @@ export default function MonumentalHome() {
                 transition={{ duration: 0.5, delay: index * 0.15 }}
                 className="relative flex flex-col items-center text-center group"
               >
-                {/* Visual Number Node */}
                 <div className="w-20 h-20 bg-[#080808] border border-white/10 rounded-full flex items-center justify-center text-2xl font-title font-bold text-[#D4AF37] mb-6 relative z-10 group-hover:border-[#D4AF37]/50 group-hover:shadow-[0_0_30px_rgba(212,175,55,0.2)] transition-all duration-500">
                   {step.num}
                 </div>
                 
-                {/* Texto Reduzido e Focado */}
                 <h4 className="text-xl md:text-2xl font-title font-bold text-white mb-3">{step.title}</h4>
                 <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-[250px]">{step.desc}</p>
               </motion.div>
@@ -232,9 +233,8 @@ export default function MonumentalHome() {
         </div>
       </section>
 
-      {/* ================= CTA FINAL ("UNBOXED" E EXPANSIVO) ================= */}
+      {/* ================= CTA FINAL ================= */}
       <section id="contato" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#030303] border-t border-white/5">
-        {/* Fundo Expansivo com Glow Radial - Sem Caixotes */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-[#030303] to-[#030303] pointer-events-none" />
         
         <motion.div 
@@ -254,7 +254,6 @@ export default function MonumentalHome() {
             Nossa agenda para a alta temporada é limitada. Priorizamos a excelência técnica entregando poucos projetos, mas absolutamente irretocáveis.
           </p>
           
-          {/* Botão com Pulse Effect para máxima conversão */}
           <div className="relative inline-block w-full sm:w-auto">
             <div className="absolute inset-0 bg-[#D4AF37] blur-xl opacity-20 animate-pulse rounded-sm"></div>
             <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener noreferrer" className="relative flex items-center justify-center gap-4 w-full sm:w-auto px-10 py-6 bg-white text-black font-title font-bold text-sm md:text-base uppercase tracking-[0.2em] hover:bg-[#D4AF37] transition-all duration-300 rounded-sm">
