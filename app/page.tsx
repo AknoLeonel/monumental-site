@@ -65,23 +65,25 @@ export default function MonumentalHome() {
         style={{ scaleX: scrollYProgress }}
       />
 
-      {/* ================= HEADER ================= */}
+      {/* ================= HEADER ULTRA-SEGURO PARA MOBILE ================= */}
       <header className="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-500 mt-[3px]">
-        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-          <div className="text-base sm:text-xl md:text-2xl font-title font-bold tracking-[0.1em] sm:tracking-[0.2em] text-white">
+        <div className="max-w-[90rem] mx-auto px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center gap-2">
+          {/* Logo reduzida no mobile para não espremer o botão */}
+          <div className="text-sm sm:text-xl md:text-2xl font-title font-bold tracking-[0.1em] sm:tracking-[0.2em] text-white shrink-0">
             MONUMENTAL<span className="text-[#D4AF37]">.</span>
           </div>
-          <a href="#contato" className="group flex items-center gap-2 sm:gap-3 px-3 py-2 sm:px-5 sm:py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 cursor-pointer rounded-sm">
-            <span className="text-[10px] sm:text-xs font-bold tracking-[0.1em] sm:tracking-[0.2em] text-[#D4AF37] group-hover:text-black uppercase transition-colors">
+          {/* Botão com padding e fonte ajustados para o mobile */}
+          <a href="#contato" className="group flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 cursor-pointer rounded-sm shrink-0">
+            <span className="text-[8px] sm:text-xs font-bold tracking-[0.1em] sm:tracking-[0.2em] text-[#D4AF37] group-hover:text-black uppercase transition-colors">
               Consultoria VIP
             </span>
-            <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37] group-hover:text-black transition-colors hidden sm:block" />
+            <ArrowRight className="w-3 h-3 text-[#D4AF37] group-hover:text-black transition-colors hidden sm:block" />
           </a>
         </div>
       </header>
 
-      {/* ================= HERO (TÍTULO TOTALMENTE SEGURO E ELEGANTE) ================= */}
-      <section ref={targetRef} className="relative w-full h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-20 pb-10">
+      {/* ================= HERO (MOBILE-FIRST CELESTIAL) ================= */}
+      <section ref={targetRef} className="relative w-full h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-10">
         <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform transform-gpu">
           <Image 
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
@@ -95,34 +97,34 @@ export default function MonumentalHome() {
         
         <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/40 via-[#030303]/60 to-[#030303] z-10" />
         
-        <motion.div style={{ opacity: opacityFade }} className="relative z-20 w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
+        <motion.div style={{ opacity: opacityFade }} className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
           
           <motion.div 
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 backdrop-blur-md mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 backdrop-blur-md mb-6 sm:mb-8"
           >
             <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-[#D4AF37]"></span>
             </span>
-            <span className="text-[9px] sm:text-xs text-[#D4AF37] uppercase tracking-[0.2em] font-semibold">
+            <span className="text-[8px] sm:text-xs text-[#D4AF37] uppercase tracking-[0.1em] sm:tracking-[0.2em] font-semibold text-center">
               O Padrão Premium em Brasília
             </span>
           </motion.div>
 
-          {/* TÍTULO BLINDADO: Usando classes base do Tailwind. Semvw, sem nowrap. Perfeito! */}
+          {/* TÍTULO BLINDADO: Usando text-[1.75rem] (28px) que cabe em QUALQUER tela de celular sem quebrar. */}
           <motion.h1 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full font-title font-extrabold uppercase tracking-tight sm:tracking-tighter leading-tight sm:leading-[1.1] mb-6"
+            className="w-full font-title font-extrabold uppercase tracking-tight sm:tracking-tighter leading-tight mb-6 sm:mb-8"
           >
-            <span className="block text-white drop-shadow-lg text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] mb-2 sm:mb-0">
+            <span className="block text-white drop-shadow-lg text-[1.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] mb-1 sm:mb-0">
               A Engenharia
             </span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem]">
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] text-[2rem] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
               Do Espetáculo.
             </span>
           </motion.h1>
@@ -131,7 +133,7 @@ export default function MonumentalHome() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="text-sm sm:text-base md:text-lg text-zinc-400 font-light max-w-2xl leading-relaxed mb-10"
+            className="text-xs sm:text-base md:text-lg text-zinc-400 font-light max-w-[280px] sm:max-w-2xl leading-relaxed sm:leading-relaxed mb-8 sm:mb-10 mx-auto"
           >
             Esqueça o amadorismo. Fornecemos estruturas de palco, audiovisual e soluções técnicas de alto calibre para eventos que exigem perfeição absoluta.
           </motion.p>
@@ -140,13 +142,13 @@ export default function MonumentalHome() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full max-w-[280px] sm:max-w-none justify-center mx-auto"
+            className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-[260px] sm:max-w-none justify-center mx-auto"
           >
             <a href="#contato" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-[#D4AF37] to-[#B8962E] text-black font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
               Solicitar Projeto <ChevronRight className="w-4 h-4" />
             </a>
             <a href="#acervo" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-transparent border border-white/20 text-white font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
-              <Play className="w-4 h-4 fill-current" /> Ver Portfólio
+              <Play className="w-3 h-3 sm:w-4 sm:h-4 fill-current" /> Ver Portfólio
             </a>
           </motion.div>
         </motion.div>
@@ -160,8 +162,8 @@ export default function MonumentalHome() {
             <h2 className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-[0.3em] mb-4 flex items-center justify-center gap-4">
               <span className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></span> Nosso Arsenal <span className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></span>
             </h2>
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tighter leading-[1]">
-              Poder de Fogo <span className="text-zinc-700">Tecnológico.</span>
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tighter leading-[1.1]">
+              Poder de Fogo <br className="block sm:hidden" /> <span className="text-zinc-700">Tecnológico.</span>
             </h3>
           </div>
 
@@ -205,7 +207,7 @@ export default function MonumentalHome() {
 
         <div className="max-w-[90rem] mx-auto text-center relative z-10">
           <h2 className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-[0.3em] mb-4">A Garantia de Sucesso</h2>
-          <h3 className="text-3xl md:text-5xl font-title font-bold text-white uppercase tracking-tighter mb-20 leading-tight">
+          <h3 className="text-3xl md:text-5xl font-title font-bold text-white uppercase tracking-tighter mb-20 leading-[1.1]">
             Você Cuida dos Convidados.<br/> <span className="text-zinc-600">Nós da Engenharia.</span>
           </h3>
 
@@ -246,25 +248,25 @@ export default function MonumentalHome() {
         >
           <ShieldCheck className="w-12 h-12 md:w-16 md:h-16 text-[#D4AF37] mx-auto mb-8" />
           
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-title font-bold text-white uppercase tracking-tighter mb-8 leading-[1.1]">
+          <h2 className="text-3xl md:text-6xl lg:text-7xl font-title font-bold text-white uppercase tracking-tighter mb-8 leading-[1.1]">
             Pronto para um evento <br className="hidden sm:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#AA771C]">Monumental?</span>
           </h2>
           
-          <p className="text-base md:text-xl text-zinc-400 font-light mb-12 max-w-2xl mx-auto">
+          <p className="text-sm md:text-xl text-zinc-400 font-light mb-12 max-w-[280px] sm:max-w-2xl mx-auto leading-relaxed">
             Nossa agenda para a alta temporada é limitada. Priorizamos a excelência técnica entregando poucos projetos, mas absolutamente irretocáveis.
           </p>
           
-          <div className="relative inline-block w-full sm:w-auto">
+          <div className="relative inline-block w-full max-w-[260px] sm:max-w-none sm:w-auto mx-auto">
             <div className="absolute inset-0 bg-[#D4AF37] blur-xl opacity-20 animate-pulse rounded-sm"></div>
-            <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener noreferrer" className="relative flex items-center justify-center gap-4 w-full sm:w-auto px-10 py-6 bg-white text-black font-title font-bold text-sm md:text-base uppercase tracking-[0.2em] hover:bg-[#D4AF37] transition-all duration-300 rounded-sm">
-              Falar com a Diretoria <ArrowRight className="w-5 h-5" />
+            <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener noreferrer" className="relative flex items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-6 py-5 sm:px-10 sm:py-6 bg-white text-black font-title font-bold text-xs md:text-base uppercase tracking-[0.2em] hover:bg-[#D4AF37] transition-all duration-300 rounded-sm">
+              Falar com a Diretoria <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </a>
           </div>
 
-          <div className="mt-14 flex flex-wrap justify-center gap-6 md:gap-10 text-[10px] md:text-xs text-zinc-500 font-semibold tracking-widest uppercase">
-            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#D4AF37]" /> Orçamento Rápido</span>
-            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#D4AF37]" /> Atendimento VIP</span>
-            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#D4AF37]" /> Sigilo & Descrição</span>
+          <div className="mt-14 flex flex-wrap justify-center gap-4 md:gap-10 text-[9px] md:text-xs text-zinc-500 font-semibold tracking-widest uppercase">
+            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Orçamento Rápido</span>
+            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Atendimento VIP</span>
+            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Sigilo & Descrição</span>
           </div>
         </motion.div>
       </section>
@@ -274,13 +276,13 @@ export default function MonumentalHome() {
         <div className="max-w-[90rem] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
           <div className="text-center md:text-left">
             <h4 className="text-xl md:text-2xl font-title font-bold text-white tracking-[0.2em] mb-4">MONUMENTAL<span className="text-[#D4AF37]">.</span></h4>
-            <p className="text-xs text-zinc-500 max-w-sm mx-auto md:mx-0 leading-relaxed">
+            <p className="text-xs text-zinc-500 max-w-[280px] sm:max-w-sm mx-auto md:mx-0 leading-relaxed">
               Estruturas, iluminação e tranquilidade absoluta. Elevando o padrão de eventos corporativos e sociais em Brasília.
             </p>
           </div>
           
           <div className="flex flex-col items-center md:items-end space-y-3">
-            <a href="mailto:contato@monumentaleventos.com.br" className="text-base md:text-xl font-light text-zinc-400 hover:text-white transition-colors">
+            <a href="mailto:contato@monumentaleventos.com.br" className="text-sm sm:text-base md:text-xl font-light text-zinc-400 hover:text-white transition-colors">
               contato@monumentaleventos.com.br
             </a>
             <p className="text-base md:text-xl font-light text-[#D4AF37]">
