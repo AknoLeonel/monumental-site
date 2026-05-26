@@ -1,303 +1,383 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronRight, ShieldCheck, ArrowRight, Play, CheckCircle2, Layers, AudioLines, HardHat } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 import Image from 'next/image';
+
+// --- COMPONENTE DE ANIMAÇÃO DE TEXTO ---
+// Divide o texto em palavras e anima cada uma individualmente a 60fps
+const AnimatedText = ({ text, className }: { text: string, className?: string }) => {
+  const words = text.split(" ");
+
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+    }),
+  };
+
+  const child = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { type: "spring", damping: 12, stiffness: 100 },
+    },
+    hidden: { opacity: 0, y: 50 },
+  };
+
+  return (
+    <motion.div
+      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "inherit" }}
+      variants={container}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-50px" }}
+      className={className}
+    >
+      {words.map((word, index) => (
+        <motion.span variants={child} style={{ marginRight: "0.25em" }} key={index}>
+          {word}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
+};
 
 export default function MonumentalHome() {
   const targetRef = useRef<HTMLElement>(null);
   
-  // Captura o scroll da página inteira para a barra de progresso no teto
-  const { scrollYProgress } = useScroll();
-  
-  // Parallax exclusivo do Hero
-  const { scrollYProgress: heroScroll } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end start"],
   });
 
-  const backgroundY = useTransform(heroScroll, [0, 1], ["0%", "25%"]);
-  const opacityFade = useTransform(heroScroll, [0, 0.5], [1, 0]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacityFade = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   const services = [
     { 
-      icon: <Layers className="w-6 h-6 text-[#D4AF37]" />,
-      title: 'Painéis de LED & Audiovisual', 
-      desc: 'Telas de altíssima resolução com pitch fino e mapping 3D. A identidade visual do seu espetáculo em definição absurda.',
+      num: "01",
+      title: 'Painéis de LED & Visual', 
+      desc: 'Telas de altíssima resolução com pitch fino e mapping 3D. A identidade visual do seu espetáculo projetada com definição absoluta, sem falhas de pixel.',
     },
     { 
-      icon: <AudioLines className="w-6 h-6 text-[#D4AF37]" />,
-      title: 'Som Line Array de Alta Fidelidade', 
-      desc: 'Garantimos que a última fileira sinta a mesma pressão sonora e clareza da primeira, sem distorções.',
+      num: "02",
+      title: 'Acústica Line Array', 
+      desc: 'Engenharia sonora pura. Garantimos que a última fileira sinta a mesma pressão, clareza e emoção da primeira, sem qualquer distorção.',
     },
     { 
-      icon: <HardHat className="w-6 h-6 text-[#D4AF37]" />,
-      title: 'Estruturas Q30 & Cenografia', 
-      desc: 'Bases robustas de alumínio e praticáveis montados sob rigorosos padrões de segurança com ART. A espinha dorsal do evento.',
+      num: "03",
+      title: 'Cenografia & Q30', 
+      desc: 'Bases robustas de alumínio e praticáveis montados sob rigorosos padrões de segurança com ART. A espinha dorsal inabalável do seu evento.',
     },
-  ];
-
-  const steps = [
-    {
-      num: '01',
-      title: 'O Escopo',
-      desc: 'Mapeamento técnico do local e alinhamento visual.'
-    },
-    {
-      num: '02',
-      title: 'O Projeto',
-      desc: 'Renderização 3D para aprovação milimétrica antes da execução.'
-    },
-    {
-      num: '03',
-      title: 'O Espetáculo',
-      desc: 'Montagem silenciosa, redundância testada e zero falhas.'
-    }
   ];
 
   return (
-    <main className="bg-[#030303] text-zinc-300 selection:bg-[#D4AF37] selection:text-black font-sans overflow-x-hidden">
+    <main className="bg-[#000000] text-zinc-300 selection:bg-[#C5A059] selection:text-black font-sans overflow-hidden">
       
-      {/* ================= SCROLL PROGRESS BAR ================= */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] origin-left z-[100]"
-        style={{ scaleX: scrollYProgress }}
-      />
-
-      {/* ================= HEADER ULTRA-SEGURO PARA MOBILE ================= */}
-      <header className="fixed w-full top-0 z-50 bg-[#030303]/80 backdrop-blur-xl border-b border-white/5 transition-all duration-500 mt-[3px]">
-        <div className="max-w-[90rem] mx-auto px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center gap-2">
-          {/* Logo reduzida no mobile para não espremer o botão */}
-          <div className="text-sm sm:text-xl md:text-2xl font-title font-bold tracking-[0.1em] sm:tracking-[0.2em] text-white shrink-0">
-            MONUMENTAL<span className="text-[#D4AF37]">.</span>
+      {/* ================= HEADER INVISÍVEL E ELEGANTE ================= */}
+      <header className="fixed w-full top-0 z-50 mix-blend-difference transition-all duration-500 pt-6 px-6 md:px-12 pointer-events-none">
+        <div className="max-w-[100rem] mx-auto flex justify-between items-start">
+          
+          <div className="relative w-40 h-8 md:w-56 md:h-10 pointer-events-auto">
+            <Image 
+              src="/Monumental.png" 
+              alt="Monumental Eventos" 
+              fill
+              sizes="(max-width: 768px) 160px, 224px"
+              className="object-contain object-left"
+              priority
+            />
           </div>
-          {/* Botão com padding e fonte ajustados para o mobile */}
-          <a href="#contato" className="group flex items-center gap-2 px-3 py-1.5 sm:px-5 sm:py-2.5 bg-[#D4AF37]/10 border border-[#D4AF37]/30 hover:bg-[#D4AF37] hover:border-[#D4AF37] transition-all duration-300 cursor-pointer rounded-sm shrink-0">
-            <span className="text-[8px] sm:text-xs font-bold tracking-[0.1em] sm:tracking-[0.2em] text-[#D4AF37] group-hover:text-black uppercase transition-colors">
-              Consultoria VIP
+
+          <a href="#contato" className="pointer-events-auto group flex items-center gap-3 pb-2 border-b border-white/30 hover:border-white transition-colors duration-300">
+            <span className="text-[10px] md:text-xs font-semibold tracking-[0.2em] text-white uppercase">
+              Contato VIP
             </span>
-            <ArrowRight className="w-3 h-3 text-[#D4AF37] group-hover:text-black transition-colors hidden sm:block" />
+            <ArrowUpRight className="w-3 h-3 text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
         </div>
       </header>
 
-      {/* ================= HERO (MOBILE-FIRST CELESTIAL) ================= */}
-      <section ref={targetRef} className="relative w-full h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-10">
+      {/* ================= HERO CINEMÁTICO (CORRIGIDO PARA MOBILE) ================= */}
+      {/* min-h-screen ao invés de 100svh para evitar bugs em navegadores de celular */}
+      <section ref={targetRef} className="relative w-full min-h-screen flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 pt-32">
+        
         <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform transform-gpu">
           <Image 
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
-            alt="Palco iluminado"
+            alt="Palco de evento monumental"
             fill
+            sizes="100vw"
             priority
-            quality={90}
-            className="object-cover object-top opacity-[0.25] grayscale mix-blend-luminosity"
+            quality={100}
+            className="object-cover opacity-40 md:opacity-30 grayscale contrast-125 mix-blend-luminosity"
           />
         </motion.div>
         
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030303]/40 via-[#030303]/60 to-[#030303] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10" />
         
-        <motion.div style={{ opacity: opacityFade }} className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 flex flex-col items-center text-center">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 backdrop-blur-md mb-6 sm:mb-8"
-          >
-            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-[#D4AF37]"></span>
-            </span>
-            <span className="text-[8px] sm:text-xs text-[#D4AF37] uppercase tracking-[0.1em] sm:tracking-[0.2em] font-semibold text-center">
-              O Padrão Premium em Brasília
-            </span>
-          </motion.div>
+        <motion.div 
+          style={{ opacity: opacityFade, y: textY }} 
+          className="relative z-20 w-full max-w-[100rem] mx-auto"
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 md:gap-0">
+            
+            <div className="max-w-5xl">
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-[10px] md:text-xs text-[#C5A059] uppercase tracking-[0.3em] font-semibold mb-4 md:mb-10"
+              >
+                O Padrão Premium em Brasília
+              </motion.p>
+              
+              {/* TÍTULO HERO - Correção drástica de tamanhos */}
+              <div className="font-title font-bold uppercase tracking-tighter leading-[0.9] text-white flex flex-col">
+                 <AnimatedText 
+                   text="A Engenharia" 
+                   className="text-[2rem] xs:text-[2rem] sm:text-7xl md:text-[2rem] lg:text-[8rem]" 
+                 />
+                 <AnimatedText 
+                   text="Do Espetáculo." 
+                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[8rem] text-zinc-500" 
+                 />
+              </div>
+            </div>
 
-          {/* TÍTULO BLINDADO: Usando text-[1.75rem] (28px) que cabe em QUALQUER tela de celular sem quebrar. */}
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full font-title font-extrabold uppercase tracking-tight sm:tracking-tighter leading-tight mb-6 sm:mb-8"
-          >
-            <span className="block text-white drop-shadow-lg text-[1.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] mb-1 sm:mb-0">
-              A Engenharia
-            </span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#F9D423] via-[#D4AF37] to-[#AA771C] text-[2rem] sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-              Do Espetáculo.
-            </span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-            className="text-xs sm:text-base md:text-lg text-zinc-400 font-light max-w-[280px] sm:max-w-2xl leading-relaxed sm:leading-relaxed mb-8 sm:mb-10 mx-auto"
-          >
-            Esqueça o amadorismo. Fornecemos estruturas de palco, audiovisual e soluções técnicas de alto calibre para eventos que exigem perfeição absoluta.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-[260px] sm:max-w-none justify-center mx-auto"
-          >
-            <a href="#contato" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-gradient-to-r from-[#D4AF37] to-[#B8962E] text-black font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:scale-105 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
-              Solicitar Projeto <ChevronRight className="w-4 h-4" />
-            </a>
-            <a href="#acervo" className="w-full sm:w-auto px-6 py-4 sm:px-10 sm:py-5 bg-transparent border border-white/20 text-white font-title font-bold text-[10px] sm:text-sm uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white/40 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 rounded-sm">
-              <Play className="w-3 h-3 sm:w-4 sm:h-4 fill-current" /> Ver Portfólio
-            </a>
-          </motion.div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+              className="md:max-w-xs mt-6 md:mt-0"
+            >
+              <p className="text-sm md:text-base text-zinc-400 font-light leading-relaxed mb-6">
+                Estruturas de palco, audiovisual e soluções técnicas de alto calibre para clientes que não admitem margem de erro.
+              </p>
+              <a href="#acervo" className="group inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase text-white font-semibold hover:text-[#C5A059] transition-colors">
+                Explorar Acervo <div className="w-8 h-[1px] bg-white group-hover:bg-[#C5A059] group-hover:w-12 transition-all duration-300" />
+              </a>
+            </motion.div>
+
+          </div>
         </motion.div>
       </section>
 
-      {/* ================= ACERVO ================= */}
-      <section id="acervo" className="py-24 md:py-32 px-6 bg-[#030303] border-t border-white/5">
-        <div className="max-w-[90rem] mx-auto">
-          
-          <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-[0.3em] mb-4 flex items-center justify-center gap-4">
-              <span className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></span> Nosso Arsenal <span className="w-8 md:w-12 h-[1px] bg-[#D4AF37]"></span>
-            </h2>
-            <h3 className="text-3xl md:text-5xl lg:text-6xl font-title font-bold text-white uppercase tracking-tighter leading-[1.1]">
-              Poder de Fogo <br className="block sm:hidden" /> <span className="text-zinc-700">Tecnológico.</span>
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {services.map((service, index) => (
+      {/* ================= ESTATÍSTICAS ================= */}
+      <section className="bg-black py-20 md:py-32 px-6 md:px-12 relative z-20 border-t border-white/5">
+        <div className="max-w-[100rem] mx-auto border-b border-white/5 pb-12 md:pb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-4">
+            {[
+              { num: "10+", label: "Anos de Excelência" },
+              { num: "500+", label: "Eventos Entregues" },
+              { num: "100%", label: "Engenharia c/ ART" },
+              { num: "Zero", label: "Falhas Técnicas" }
+            ].map((stat, i) => (
               <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group flex flex-col bg-[#080808] border border-white/5 hover:border-[#D4AF37]/30 transition-colors duration-500 overflow-hidden rounded-sm"
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                key={i} 
+                className="flex flex-col items-start md:border-l border-white/5 md:pl-8 first:border-0 first:pl-0"
               >
-                <div className="w-full h-56 md:h-64 bg-[#0a0a0a] relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#080808] to-transparent z-10" />
-                  <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-title text-xs tracking-[0.3em] uppercase transition-transform duration-700 group-hover:scale-105">
-                    [ Foto {index + 1} Aqui ]
-                  </div>
-                </div>
-
-                <div className="p-8 relative z-20 -mt-8">
-                  <div className="w-12 h-12 bg-[#030303] border border-white/10 flex items-center justify-center mb-6 shadow-xl">
-                    {service.icon}
-                  </div>
-                  <h4 className="text-xl md:text-2xl font-title font-bold text-white mb-4 leading-tight">
-                    {service.title}
-                  </h4>
-                  <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                    {service.desc}
-                  </p>
-                </div>
+                <span className="text-4xl md:text-6xl font-title font-bold text-white mb-2">{stat.num}</span>
+                <span className="text-[9px] md:text-xs text-zinc-500 uppercase tracking-[0.2em]">{stat.label}</span>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= ACERVO ================= */}
+      <section id="acervo" className="py-20 md:py-40 bg-black">
+        <div className="max-w-[100rem] mx-auto px-6 md:px-12">
+          
+          <div className="mb-24 md:mb-40 flex flex-col justify-start">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-title font-bold text-white uppercase tracking-tighter leading-[1] mb-8">
+              Poder de Fogo <br /> <span className="text-zinc-700">Tecnológico.</span>
+            </h2>
+            <p className="text-sm md:text-lg text-zinc-400 font-light max-w-sm leading-relaxed">
+              Trabalhamos com arsenais de ponta, revisados exaustivamente antes de cada montagem. O luxo invisível que garante o espetáculo.
+            </p>
+          </div>
+
+          <div className="space-y-32 md:space-y-56">
+            {services.map((service, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <div 
+                  key={index}
+                  className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-32`}
+                >
+                  {/* Imagem Editorial */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="w-full md:w-1/2 aspect-[4/5] bg-[#0a0a0a] relative group overflow-hidden border border-white/5"
+                  >
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 z-10" />
+                    {/* Imagem Placeholder */}
+                    <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-title text-sm tracking-[0.3em] uppercase">
+                      [ Foto {index + 1} - Alta Resolução ]
+                    </div>
+                  </motion.div>
+
+                  {/* Texto Clean */}
+                  <div className="w-full md:w-1/2 flex flex-col">
+                    <motion.span 
+                      initial={{ opacity: 0, x: isEven ? -20 : 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      className="text-6xl md:text-[8rem] font-title font-bold text-[#111] leading-none mb-6 md:mb-12"
+                    >
+                      {service.num}
+                    </motion.span>
+                    
+                    <AnimatedText text={service.title} className="text-3xl md:text-5xl font-title font-bold text-white mb-6 tracking-tight" />
+                    
+                    <motion.p 
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 }}
+                      className="text-base md:text-xl text-zinc-400 font-light leading-relaxed max-w-lg mb-12"
+                    >
+                      {service.desc}
+                    </motion.p>
+                    
+                    <motion.a 
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      href="#contato" 
+                      className="group inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase text-white font-semibold hover:text-[#C5A059] transition-colors self-start"
+                    >
+                      Orçar Estrutura <ArrowRight className="w-4 h-4 transform group-hover:translate-x-2 transition-transform" />
+                    </motion.a>
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
       {/* ================= O MÉTODO ================= */}
-      <section id="metodo" className="py-24 md:py-32 px-6 bg-[#050505] border-t border-white/5 relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#D4AF37]/5 blur-[120px] pointer-events-none" />
+      <section className="py-32 md:py-48 bg-[#030303] px-6 md:px-12 border-t border-white/5">
+        <div className="max-w-[100rem] mx-auto flex flex-col md:flex-row gap-16 md:gap-32">
+          
+          <div className="md:w-1/2 md:sticky top-40 self-start">
+            <p className="text-[10px] md:text-xs font-bold text-[#C5A059] uppercase tracking-[0.3em] mb-6">A Garantia Monumental</p>
+            <h3 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold text-white uppercase tracking-tighter leading-[1]">
+              Você Cuida <br/> dos Convidados. <br/> <span className="text-zinc-700">Nós da <br/>Engenharia.</span>
+            </h3>
+          </div>
 
-        <div className="max-w-[90rem] mx-auto text-center relative z-10">
-          <h2 className="text-[10px] sm:text-xs font-bold text-[#D4AF37] uppercase tracking-[0.3em] mb-4">A Garantia de Sucesso</h2>
-          <h3 className="text-3xl md:text-5xl font-title font-bold text-white uppercase tracking-tighter mb-20 leading-[1.1]">
-            Você Cuida dos Convidados.<br/> <span className="text-zinc-600">Nós da Engenharia.</span>
-          </h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 relative">
-            <div className="hidden md:block absolute top-10 left-[20%] right-[20%] h-[1px] border-t border-dashed border-white/20" />
-
-            {steps.map((step, index) => (
+          <div className="md:w-1/2 flex flex-col gap-16 md:gap-24 pt-12 md:pt-0">
+            {[
+              { t: 'Redundância', d: 'Equipamentos de backup on-site. Se algo falhar, o sistema assume em segundos sem que ninguém perceba.' },
+              { t: 'Discrição', d: 'Nossa equipe atua como sombras. Uniformizados, discretos e treinados para o mais alto nível corporativo.' },
+              { t: 'Pontualidade', d: 'Seu evento pronto e exaustivamente testado horas antes do primeiro convidado chegar no local.' }
+            ].map((item, i) => (
               <motion.div 
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-                className="relative flex flex-col items-center text-center group"
+                className="border-t border-white/10 pt-8"
               >
-                <div className="w-20 h-20 bg-[#080808] border border-white/10 rounded-full flex items-center justify-center text-2xl font-title font-bold text-[#D4AF37] mb-6 relative z-10 group-hover:border-[#D4AF37]/50 group-hover:shadow-[0_0_30px_rgba(212,175,55,0.2)] transition-all duration-500">
-                  {step.num}
-                </div>
-                
-                <h4 className="text-xl md:text-2xl font-title font-bold text-white mb-3">{step.title}</h4>
-                <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-[250px]">{step.desc}</p>
+                <AnimatedText text={item.t} className="text-2xl md:text-4xl font-title font-bold text-white mb-4" />
+                <p className="text-base md:text-xl text-zinc-400 font-light leading-relaxed">{item.d}</p>
               </motion.div>
             ))}
           </div>
+
         </div>
       </section>
 
       {/* ================= CTA FINAL ================= */}
-      <section id="contato" className="relative py-32 md:py-48 px-6 overflow-hidden bg-[#030303] border-t border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#D4AF37]/10 via-[#030303] to-[#030303] pointer-events-none" />
-        
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center relative z-10"
-        >
-          <ShieldCheck className="w-12 h-12 md:w-16 md:h-16 text-[#D4AF37] mx-auto mb-8" />
+      <section id="contato" className="py-32 md:py-64 bg-black px-6 md:px-12 text-center flex flex-col items-center justify-center border-t border-white/5">
+        <div className="max-w-5xl mx-auto">
           
-          <h2 className="text-3xl md:text-6xl lg:text-7xl font-title font-bold text-white uppercase tracking-tighter mb-8 leading-[1.1]">
-            Pronto para um evento <br className="hidden sm:block" /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] to-[#AA771C]">Monumental?</span>
-          </h2>
+          <AnimatedText 
+            text="O Próximo Nível Começa Aqui." 
+            className="text-4xl sm:text-6xl md:text-[6rem] lg:text-[8rem] font-title font-bold text-white uppercase tracking-tighter leading-[0.9] mb-12 justify-center" 
+          />
           
-          <p className="text-sm md:text-xl text-zinc-400 font-light mb-12 max-w-[280px] sm:max-w-2xl mx-auto leading-relaxed">
-            Nossa agenda para a alta temporada é limitada. Priorizamos a excelência técnica entregando poucos projetos, mas absolutamente irretocáveis.
-          </p>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            className="text-base md:text-xl text-zinc-400 font-light mb-16 max-w-2xl mx-auto leading-relaxed"
+          >
+            Nossa agenda é propositalmente limitada. Priorizamos a excelência entregando poucos projetos, mas absolutamente irretocáveis.
+          </motion.p>
           
-          <div className="relative inline-block w-full max-w-[260px] sm:max-w-none sm:w-auto mx-auto">
-            <div className="absolute inset-0 bg-[#D4AF37] blur-xl opacity-20 animate-pulse rounded-sm"></div>
-            <a href="https://wa.me/SEUNUMERO" target="_blank" rel="noopener noreferrer" className="relative flex items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto px-6 py-5 sm:px-10 sm:py-6 bg-white text-black font-title font-bold text-xs md:text-base uppercase tracking-[0.2em] hover:bg-[#D4AF37] transition-all duration-300 rounded-sm">
-              Falar com a Diretoria <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </a>
-          </div>
-
-          <div className="mt-14 flex flex-wrap justify-center gap-4 md:gap-10 text-[9px] md:text-xs text-zinc-500 font-semibold tracking-widest uppercase">
-            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Orçamento Rápido</span>
-            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Atendimento VIP</span>
-            <span className="flex items-center gap-1.5 sm:gap-2"><CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#D4AF37]" /> Sigilo & Descrição</span>
-          </div>
-        </motion.div>
+          <motion.a 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8 }}
+            href="https://wa.me/SEUNUMERO" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="group relative inline-flex items-center justify-center gap-4 bg-white text-black px-10 py-5 md:px-16 md:py-8 overflow-hidden w-full sm:w-auto"
+          >
+            <span className="absolute inset-0 w-full h-full bg-[#C5A059] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out" />
+            <span className="relative z-10 font-title font-bold text-xs md:text-sm uppercase tracking-[0.2em] whitespace-nowrap">
+              Falar com a Diretoria
+            </span>
+            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 relative z-10 transform group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </div>
       </section>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="bg-[#020202] py-16 md:py-20 border-t border-white/5">
-        <div className="max-w-[90rem] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20">
-          <div className="text-center md:text-left">
-            <h4 className="text-xl md:text-2xl font-title font-bold text-white tracking-[0.2em] mb-4">MONUMENTAL<span className="text-[#D4AF37]">.</span></h4>
-            <p className="text-xs text-zinc-500 max-w-[280px] sm:max-w-sm mx-auto md:mx-0 leading-relaxed">
-              Estruturas, iluminação e tranquilidade absoluta. Elevando o padrão de eventos corporativos e sociais em Brasília.
+      {/* ================= FOOTER DE LUXO ================= */}
+      <footer className="bg-[#030303] py-20 px-6 md:px-12 border-t border-white/5">
+        <div className="max-w-[100rem] mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-12 border-b border-white/10 pb-16">
+          
+          <div className="flex flex-col items-start">
+            <div className="relative w-48 h-12 md:w-72 md:h-16 mb-8">
+              <Image 
+                src="/Monumental.png" 
+                alt="Monumental Eventos" 
+                fill
+                sizes="(max-width: 768px) 192px, 288px"
+                className="object-contain object-left"
+              />
+            </div>
+            <p className="text-sm md:text-base text-zinc-500 max-w-sm leading-relaxed font-light">
+              Elevando o padrão de eventos corporativos e cerimoniais de alto luxo em Brasília.
             </p>
           </div>
-          
-          <div className="flex flex-col items-center md:items-end space-y-3">
-            <a href="mailto:contato@monumentaleventos.com.br" className="text-sm sm:text-base md:text-xl font-light text-zinc-400 hover:text-white transition-colors">
-              contato@monumentaleventos.com.br
+
+          <div className="flex flex-col gap-2 md:text-right w-full md:w-auto">
+            <p className="text-[10px] md:text-xs text-zinc-600 uppercase tracking-[0.2em] font-semibold mb-2">Contato Exclusivo</p>
+            <a href="mailto:diretoria@monumentaleventos.com.br" className="text-base sm:text-lg md:text-2xl font-light text-white hover:text-[#C5A059] transition-colors break-words">
+              diretoria@monumental.com.br
             </a>
-            <p className="text-base md:text-xl font-light text-[#D4AF37]">
+            <p className="text-base sm:text-lg md:text-2xl font-light text-zinc-400">
               +55 (61) 99999-9999
             </p>
-            <div className="flex gap-6 mt-4">
-              <a href="#" className="text-[10px] text-zinc-600 hover:text-[#D4AF37] uppercase tracking-[0.2em] font-semibold transition-colors">Instagram</a>
-              <a href="#" className="text-[10px] text-zinc-600 hover:text-[#D4AF37] uppercase tracking-[0.2em] font-semibold transition-colors">WhatsApp</a>
+            <div className="flex gap-6 mt-6 md:justify-end">
+              <a href="#" className="text-[10px] text-zinc-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Instagram</a>
+              <a href="#" className="text-[10px] text-zinc-500 hover:text-white uppercase tracking-[0.2em] transition-colors">WhatsApp</a>
             </div>
           </div>
+
         </div>
         
-        <div className="max-w-[90rem] mx-auto px-6 mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] sm:text-[10px] text-zinc-700 uppercase tracking-widest gap-4">
-          <p>© {new Date().getFullYear()} Monumental Eventos.</p>
-          <p>Desenvolvido por <span className="text-zinc-500 font-bold">AKNOTECH</span></p>
+        <div className="max-w-[100rem] mx-auto mt-8 flex flex-col md:flex-row justify-between items-start md:items-center text-[9px] md:text-[10px] text-zinc-600 uppercase tracking-widest gap-4">
+          <p>© {new Date().getFullYear()} Monumental Eventos. Todos os direitos reservados.</p>
+          <p>Design & Code by <span className="text-zinc-400 font-bold hover:text-white transition-colors cursor-pointer">AKNOTECH</span></p>
         </div>
       </footer>
     </main>
