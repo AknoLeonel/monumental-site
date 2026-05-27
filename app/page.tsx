@@ -1,24 +1,28 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 import Image from 'next/image';
 
-// --- COMPONENTE DE ANIMAÇÃO DE TEXTO ---
-// Divide o texto em palavras e anima cada uma individualmente a 60fps
-const AnimatedText = ({ text, className }: { text: string, className?: string }) => {
+// --- COMPONENTE DE ANIMAÇÃO DE TEXTO (TIPADO CORRETAMENTE PARA O TYPESCRIPT) ---
+interface AnimatedTextProps {
+  text: string;
+  className?: string;
+}
+
+const AnimatedText = ({ text, className }: AnimatedTextProps) => {
   const words = text.split(" ");
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
-    visible: (i = 1) => ({
+    visible: (i: number = 1) => ({
       opacity: 1,
       transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
     }),
   };
 
-  const child = {
+  const child: Variants = {
     visible: {
       opacity: 1,
       y: 0,
@@ -102,8 +106,7 @@ export default function MonumentalHome() {
         </div>
       </header>
 
-      {/* ================= HERO CINEMÁTICO (CORRIGIDO PARA MOBILE) ================= */}
-      {/* min-h-screen ao invés de 100svh para evitar bugs em navegadores de celular */}
+      {/* ================= HERO CINEMÁTICO (CORRIGIDO PARA MOBILE E TIPADO) ================= */}
       <section ref={targetRef} className="relative w-full min-h-screen flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 pt-32">
         
         <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform transform-gpu">
@@ -136,15 +139,14 @@ export default function MonumentalHome() {
                 O Padrão Premium em Brasília
               </motion.p>
               
-              {/* TÍTULO HERO - Correção drástica de tamanhos */}
               <div className="font-title font-bold uppercase tracking-tighter leading-[0.9] text-white flex flex-col">
                  <AnimatedText 
                    text="A Engenharia" 
-                   className="text-[2rem] xs:text-[2rem] sm:text-7xl md:text-[2rem] lg:text-[8rem]" 
+                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[9rem]" 
                  />
                  <AnimatedText 
                    text="Do Espetáculo." 
-                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[8rem] text-zinc-500" 
+                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[9rem] text-zinc-500" 
                  />
               </div>
             </div>
@@ -223,7 +225,6 @@ export default function MonumentalHome() {
                     className="w-full md:w-1/2 aspect-[4/5] bg-[#0a0a0a] relative group overflow-hidden border border-white/5"
                   >
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 z-10" />
-                    {/* Imagem Placeholder */}
                     <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-title text-sm tracking-[0.3em] uppercase">
                       [ Foto {index + 1} - Alta Resolução ]
                     </div>
