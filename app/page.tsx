@@ -5,7 +5,7 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 import Image from 'next/image';
 
-// --- COMPONENTE DE ANIMAÇÃO DE TEXTO (TIPADO CORRETAMENTE PARA O TYPESCRIPT) ---
+// --- COMPONENTE DE ANIMAÇÃO DE TEXTO ---
 interface AnimatedTextProps {
   text: string;
   className?: string;
@@ -33,7 +33,8 @@ const AnimatedText = ({ text, className }: AnimatedTextProps) => {
 
   return (
     <motion.div
-      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "inherit" }}
+      // O paddingRight garante que as últimas letras não sejam cortadas pelo overflow: hidden
+      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap", justifyContent: "inherit", paddingRight: "8px" }}
       variants={container}
       initial="hidden"
       whileInView="visible"
@@ -106,8 +107,8 @@ export default function MonumentalHome() {
         </div>
       </header>
 
-      {/* ================= HERO CINEMÁTICO (CORRIGIDO PARA MOBILE E TIPADO) ================= */}
-      <section ref={targetRef} className="relative w-full min-h-screen flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-12 pt-32">
+      {/* ================= HERO CINEMÁTICO ================= */}
+      <section ref={targetRef} className="relative w-full min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
         
         <motion.div style={{ y: backgroundY }} className="absolute inset-0 z-0 will-change-transform transform-gpu">
           <Image 
@@ -125,43 +126,60 @@ export default function MonumentalHome() {
         
         <motion.div 
           style={{ opacity: opacityFade, y: textY }} 
-          className="relative z-20 w-full max-w-[100rem] mx-auto"
+          className="relative z-20 w-full max-w-[100rem] mx-auto flex flex-col justify-center h-full mt-12 md:mt-0"
         >
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-12 md:gap-0">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12 lg:gap-8 w-full">
             
-            <div className="max-w-5xl">
+            {/* ================= BLOCO ESQUERDO (TÍTULOS AJUSTADOS) ================= */}
+            <div className="flex flex-col w-full lg:w-3/4">
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-[10px] md:text-xs text-[#C5A059] uppercase tracking-[0.3em] font-semibold mb-4 md:mb-10"
+                className="text-[10px] md:text-xs text-[#C5A059] uppercase tracking-[0.3em] font-semibold mb-6 md:mb-8"
               >
                 O Padrão Premium em Brasília
               </motion.p>
               
-              <div className="font-title font-bold uppercase tracking-tighter leading-[0.9] text-white flex flex-col">
-                 <AnimatedText 
-                   text="A Engenharia" 
-                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[9rem]" 
-                 />
-                 <AnimatedText 
-                   text="Do Espetáculo." 
-                   className="text-[3rem] xs:text-[3.5rem] sm:text-7xl md:text-[6rem] lg:text-[9rem] text-zinc-500" 
-                 />
+              <div className="font-title font-bold uppercase tracking-tighter text-white flex flex-col w-full">
+                {/* Tamanhos da proporção vw reduzidos para caber dentro da div lg:w-3/4 */}
+                <AnimatedText 
+                  text="A" 
+                  className="text-[clamp(1.5rem,3vw,3rem)] text-zinc-400 ml-1 md:ml-2 leading-none mb-1 md:mb-2 pr-2" 
+                />
+                
+                <AnimatedText 
+                  text="Engenharia" 
+                  className="text-[clamp(2.5rem,6.5vw,7.5rem)] w-full text-white leading-[0.85] pb-1 pr-4" 
+                />
+                
+                <AnimatedText 
+                  text="Do" 
+                  className="text-[clamp(1.5rem,3vw,3rem)] text-zinc-500 ml-1 md:ml-2 mt-2 md:mt-4 leading-none mb-1 md:mb-2 pr-2" 
+                />
+                
+                <AnimatedText 
+                  text="Espetáculo." 
+                  className="text-[clamp(2.5rem,6vw,7rem)] text-zinc-400 leading-[0.85] pb-2 pr-4" 
+                />
               </div>
             </div>
 
+            {/* ================= BLOCO DIREITO (DESCRIÇÃO) ================= */}
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="md:max-w-xs mt-6 md:mt-0"
+              className="w-full lg:w-1/4 flex flex-col lg:items-end lg:text-right mt-8 lg:mt-0 mb-4"
             >
-              <p className="text-sm md:text-base text-zinc-400 font-light leading-relaxed mb-6">
+              <p className="text-sm md:text-base text-zinc-400 font-light leading-relaxed mb-6 max-w-sm">
                 Estruturas de palco, audiovisual e soluções técnicas de alto calibre para clientes que não admitem margem de erro.
               </p>
               <a href="#acervo" className="group inline-flex items-center gap-4 text-xs tracking-[0.2em] uppercase text-white font-semibold hover:text-[#C5A059] transition-colors">
-                Explorar Acervo <div className="w-8 h-[1px] bg-white group-hover:bg-[#C5A059] group-hover:w-12 transition-all duration-300" />
+                <span className="lg:hidden">Explorar Acervo</span>
+                <div className="hidden lg:block w-8 h-[1px] bg-white group-hover:bg-[#C5A059] group-hover:w-12 transition-all duration-300" />
+                <span className="hidden lg:block">Explorar Acervo</span>
+                <div className="lg:hidden w-8 h-[1px] bg-white group-hover:bg-[#C5A059] group-hover:w-12 transition-all duration-300" />
               </a>
             </motion.div>
 
@@ -208,26 +226,30 @@ export default function MonumentalHome() {
             </p>
           </div>
 
-          <div className="space-y-32 md:space-y-56">
+          <div className="space-y-32 md:space-y-48">
             {services.map((service, index) => {
               const isEven = index % 2 === 0;
               return (
                 <div 
                   key={index}
-                  className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-32`}
+                  className={`flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center justify-between gap-12 md:gap-20`}
                 >
-                  {/* Imagem Editorial */}
+                  {/* Imagem Editorial (Agora quadrada, menor, com borda e luz dourada) */}
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="w-full md:w-1/2 aspect-[4/5] bg-[#0a0a0a] relative group overflow-hidden border border-white/5"
+                    className="w-full max-w-md md:w-5/12 aspect-square bg-[#050505] relative group overflow-hidden border border-[#C5A059]/30 shadow-[0_0_30px_-5px_rgba(197,160,89,0.25)] hover:shadow-[0_0_50px_-5px_rgba(197,160,89,0.45)] transition-all duration-700"
                   >
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 z-10" />
-                    <div className="absolute inset-0 flex items-center justify-center text-zinc-800 font-title text-sm tracking-[0.3em] uppercase">
-                      [ Foto {index + 1} - Alta Resolução ]
-                    </div>
+                    <Image 
+                      src={`/foto (${index + 1}).jpg`} 
+                      alt={service.title} 
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center grayscale-[20%] group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105"
+                    />
                   </motion.div>
 
                   {/* Texto Clean */}
@@ -236,7 +258,7 @@ export default function MonumentalHome() {
                       initial={{ opacity: 0, x: isEven ? -20 : 20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
-                      className="text-6xl md:text-[8rem] font-title font-bold text-[#111] leading-none mb-6 md:mb-12"
+                      className="text-6xl md:text-[7rem] font-title font-bold text-[#111] leading-none mb-6 md:mb-10"
                     >
                       {service.num}
                     </motion.span>
@@ -304,20 +326,22 @@ export default function MonumentalHome() {
       </section>
 
       {/* ================= CTA FINAL ================= */}
-      <section id="contato" className="py-32 md:py-64 bg-black px-6 md:px-12 text-center flex flex-col items-center justify-center border-t border-white/5">
-        <div className="max-w-5xl mx-auto">
+      <section id="contato" className="py-32 md:py-64 bg-black px-6 md:px-12 flex flex-col items-center justify-center border-t border-white/5">
+        <div className="max-w-5xl mx-auto flex flex-col items-center w-full">
           
-          <AnimatedText 
-            text="O Próximo Nível Começa Aqui." 
-            className="text-4xl sm:text-6xl md:text-[6rem] lg:text-[8rem] font-title font-bold text-white uppercase tracking-tighter leading-[0.9] mb-12 justify-center" 
-          />
+          <div className="flex flex-col items-center text-center font-title font-bold uppercase tracking-tighter leading-[0.9] mb-12 w-full">
+            <AnimatedText text="O Próximo" className="text-[clamp(3rem,8vw,6.5rem)] text-white justify-center w-full pb-1" />
+            <AnimatedText text="Nível" className="text-[clamp(3rem,8vw,6.5rem)] text-zinc-400 justify-center w-full pb-1" />
+            <AnimatedText text="Começa" className="text-[clamp(3rem,8vw,6.5rem)] text-white justify-center w-full pb-1" />
+            <AnimatedText text="Aqui." className="text-[clamp(3rem,8vw,6.5rem)] text-[#C5A059] justify-center w-full pb-1" />
+          </div>
           
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="text-base md:text-xl text-zinc-400 font-light mb-16 max-w-2xl mx-auto leading-relaxed"
+            className="text-base md:text-xl text-zinc-400 font-light mb-16 max-w-2xl text-center leading-relaxed"
           >
             Nossa agenda é propositalmente limitada. Priorizamos a excelência entregando poucos projetos, mas absolutamente irretocáveis.
           </motion.p>
