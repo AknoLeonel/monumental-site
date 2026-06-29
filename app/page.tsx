@@ -351,7 +351,7 @@ export default function MonumentalHome() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.8 }}
-            href="https://wa.me/SEUNUMERO" 
+            href="https://wa.me/+5561996432194" 
             target="_blank" 
             rel="noopener noreferrer" 
             className="group relative inline-flex items-center justify-center gap-4 bg-white text-black px-10 py-5 md:px-16 md:py-8 overflow-hidden w-full sm:w-auto"
@@ -390,7 +390,7 @@ export default function MonumentalHome() {
               diretoria@monumental.com.br
             </a>
             <p className="text-base sm:text-lg md:text-2xl font-light text-zinc-400">
-              +55 (61) 99999-9999
+              +55 (61) 99643-2194
             </p>
             <div className="flex gap-6 mt-6 md:justify-end">
               <a href="#" className="text-[10px] text-zinc-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Instagram</a>
